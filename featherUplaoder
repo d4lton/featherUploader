@@ -1,0 +1,44 @@
+var serialPort = require('serialport');
+var exec = require('child_process').exec;
+
+var binPath = process.argv[2];
+if (!binPath) {
+  console.log('UPLOADER: must specify full path to .bin file');
+  process.exit(1);
+}
+
+function upload(binPath) {
+  console.log('UPLOADER: Uploading binary at ' + binPath);
+  var cmd = '~/Library/Arduino15/packages/arduino/tools/bossac/1.6.1-arduino/bossac -i -d -U true -i -e -w -v ' + binPath + ' -R';
+  exec(cmd, function(error, stdout, stderr) {
+    if (stderr) {
+      console.log(stderr);
+    } else {
+      console.log(stdout);
+    }
+  });
+}
+
+serialPort.list(function (err, ports) {
+  var found = false;
+  ports.forEach(function(p) {
+    if (p.comName && p.manufacturer === 'Adafruit') {
+      found = true;
+      console.log('UPLOADER: Found Feather device');
+      console.log('UPLOADER: Placing device into uploader mode...');
+      var port = new serialPort(p.comName, {"autoOpen": false, "baudRate": 1200});
+      port.open(function(error) {
+        port.close();
+        console.log('UPLOADER: Device should be in uploader mode, waiting for things to settle');
+        setTimeout(function() {
+          upload(binPath);
+        }, 1000);
+      });
+    }
+  });
+  if (!found) {
+    console.log('UPLOADER: Could not find Feather device');
+    console.log('UPLOADER: Attempting upload without reset');
+    upload(binPath);
+  }
+});
