@@ -7,6 +7,6 @@ You'll need to to `npm install` to install Node dependencies
 
 Requires: [Node](http://nodejs.org/), [Arduino.cc](http://www.arduino.cc/) IDE (installed, but doesn't need to be running)
 
-usage: node featherUploader <fully-qualified path to .bin file>
+usage: `node featherUploader <fully-qualified path to .bin file>`
 
 
