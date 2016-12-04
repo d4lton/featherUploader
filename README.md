@@ -9,4 +9,4 @@ Requires: [Node](http://nodejs.org/), [Arduino.cc](http://www.arduino.cc/) IDE (
 
 usage: `node featherUploader <fully-qualified path to .bin file>`
 
-
+NOTE: only tested under macOS so far
