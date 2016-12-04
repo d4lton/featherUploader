@@ -1,5 +1,6 @@
 var serialPort = require('serialport');
 var exec = require('child_process').exec;
+var config = require(__dirname + '/config.json');
 
 var binPath = process.argv[2];
 if (!binPath) {
@@ -9,7 +10,7 @@ if (!binPath) {
 
 function upload(binPath) {
   console.log('UPLOADER: Uploading binary at ' + binPath);
-  var cmd = '~/Library/Arduino15/packages/arduino/tools/bossac/1.6.1-arduino/bossac -i -d -U true -i -e -w -v ' + binPath + ' -R';
+  var cmd = config.paths.bossac + ' -i -d -U true -i -e -w -v ' + binPath + ' -R';
   exec(cmd, function(error, stdout, stderr) {
     if (stderr) {
       console.log(stderr);
@@ -22,7 +23,7 @@ function upload(binPath) {
 serialPort.list(function (err, ports) {
   var found = false;
   ports.forEach(function(p) {
-    if (p.comName && p.manufacturer === 'Adafruit') {
+    if (p.comName && p.manufacturer === config.manufacturer) {
       found = true;
       console.log('UPLOADER: Found Feather device');
       console.log('UPLOADER: Placing device into uploader mode...');
