@@ -9,8 +9,13 @@ Requires: [Node](http://nodejs.org/), [Arduino.cc](http://www.arduino.cc/) IDE (
 
 usage: `node featherUploader <fully-qualified path to .bin file>`
 
+NOTE: only tested under macOS so far
+
+
 RELEASE NOTES:
 
-1.0.1 - added config.json so the path to bossac and manufacturer string can be configured
+  1.0.1 - added config.json so the path to bossac and manufacturer string can be configured
 
-1.0.0 - initial release
+  1.0.0 - initial release
+
+
